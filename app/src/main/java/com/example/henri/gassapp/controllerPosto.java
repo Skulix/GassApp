@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * Created by henri on 28/04/2016.
  */
@@ -16,8 +19,31 @@ public class controllerPosto {
         banco = new DBHelper(context);
     }
 
+    public String inserePostoObjeto(modelPosto posto){
+        ContentValues valores;
+        long resultado = 0;
+
+        try {
+            db = banco.getWritableDatabase();
+
+            valores = new ContentValues();
+            valores.put(DBHelper.COLUNA_NOME, posto.getNome());
+            valores.put(DBHelper.COLUNA_ENDERECO, posto.getEndereco());
+            valores.put(DBHelper.COLUNA_GASOLINA, posto.getGasolina());
+            resultado = db.insert(DBHelper.NOME_TABELA_POSTO, null, valores);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+
+            db.close();
+        }
+
+        if (resultado == -1) return "Erro ao inserir registro";
+        else return "Registro inserido com sucesso";
+    }
+
     public String inserePosto(
-            int codigo,
             String nome,
             String endereco,
             String bairro,
@@ -36,7 +62,6 @@ public class controllerPosto {
         long resultado;
         db = banco.getWritableDatabase();
         valores = new ContentValues();
-        valores.put(DBHelper.COLUNA_CODIGO, codigo);
         valores.put(DBHelper.COLUNA_NOME, nome);
         valores.put(DBHelper.COLUNA_ENDERECO, endereco);
         valores.put(DBHelper.COLUNA_BAIRRO, bairro);
@@ -57,6 +82,11 @@ public class controllerPosto {
         if (resultado == -1) return "Erro ao inserir registro";
         else return "Registro inserido com sucesso";
     }
+
+    public void dropDatabase(){
+        banco.drop();
+    }
+
 
     public void alteraRegistro(
             int codigo,
@@ -103,7 +133,7 @@ public class controllerPosto {
         db.close();
     }
 
-    public Cursor preencheSpinner(){
+    public ArrayList<modelPosto> preencheSpinner(){
         Cursor cursor;
         String[] campos = new String[] {
                                         banco.COLUNA_CODIGO,
@@ -122,13 +152,43 @@ public class controllerPosto {
                                         banco.COLUNA_TELEFONE,
                                         banco.COLUNA_CIDADE };
 
-        db = banco.getReadableDatabase();
-        cursor = db.query(banco.NOME_BANCO, campos, null, null, null, null, banco.COLUNA_GASOLINA+" ASC", null);
-        if(cursor!=null){
-            cursor.moveToFirst();
+        try {
+            db = banco.getReadableDatabase();
+            cursor = db.query(banco.NOME_TABELA_POSTO, campos, null, null, null, null, banco.COLUNA_GASOLINA + " ASC", null);
+
+            ArrayList<modelPosto> postos = new ArrayList<>();
+            if (cursor != null) {
+                cursor.moveToFirst();
+                while (cursor.moveToNext()) {
+                    postos.add(buscaLinha(cursor));
+                }
+            }
+            db.close();
+            return postos;
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        db.close();
-        return cursor;
+        return null;
+    }
+
+    public modelPosto buscaLinha(Cursor cursor){
+        modelPosto p = new modelPosto();
+        p.setCodigo(Integer.parseInt(cursor.getString(0)));
+        p.setNome(cursor.getString(1));
+        p.setEndereco(cursor.getString(2));
+        p.setBairro(cursor.getString(3));
+        p.setTelefone(cursor.getString(4));
+        p.setDt_pesquisa(cursor.getString(5));
+        p.setBandeira(cursor.getString(6));
+        p.setGasolina(cursor.getString(7) != null? Float.parseFloat(cursor.getString(7)) : 0);
+        p.setAlcool(cursor.getString(8)!= null? Float.parseFloat(cursor.getString(8)) : 0);
+        p.setDiesel(cursor.getString(9)!= null? Float.parseFloat(cursor.getString(9)) : 0);
+        p.setGnv(cursor.getString(10)!= null? Float.parseFloat(cursor.getString(10)) : 0);
+        p.setLat(cursor.getString(11)!= null? Float.parseFloat(cursor.getString(11)) : 0);
+        p.setLon(cursor.getString(12)!= null? Float.parseFloat(cursor.getString(12)) : 0);
+        p.setDistancia(cursor.getString(13)!= null? Float.parseFloat(cursor.getString(13)) : 0);
+        p.setCidade(cursor.getString(14));
+        return p;
     }
 
     public Cursor carregaRegistroUnico(int codigo){
@@ -158,9 +218,4 @@ public class controllerPosto {
         db.close();
         return cursor;
     }
-
-
-
-
-
 }

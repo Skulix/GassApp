@@ -10,10 +10,11 @@
     tools:context="com.example.henri.gassapp.ShowGasStationsList">
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listview"
-        android:layout_alignParentTop="true"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/listViewPostos"
         android:layout_centerHorizontal="true"
-        tools:listitem="@android:layout/simple_list_item_2" />
+        tools:listitem="@android:layout/simple_list_item_multiple_choice"
+        android:background="#ad1515"
+        android:visibility="visible" />
 </RelativeLayout>

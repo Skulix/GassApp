@@ -36,11 +36,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CRIA_TABELA_PRODUTOS = "CREATE TABLE " +
                 NOME_TABELA_POSTO + "(" +
-                COLUNA_CODIGO + " INTEGER PRIMARY KEY," +
+                COLUNA_CODIGO + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COLUNA_NOME + " TEXT," +
                 COLUNA_ENDERECO + " TEXT," +
                 COLUNA_BAIRRO + " TEXT," +
-                COLUNA_CIDADE + " TEXT," +
                 COLUNA_TELEFONE + " TEXT," +
                 COLUNA_DT_PESQUISA + " TEXT," +
                 COLUNA_BANDEIRA + " TEXT," +
@@ -51,6 +50,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 COLUNA_LAT + " REAL," +
                 COLUNA_LON + " REAL," +
                 COLUNA_DISTANCIA + " REAL," +
+                COLUNA_CIDADE + " TEXT" +
                 ")";
         db.execSQL(CRIA_TABELA_PRODUTOS);
     }
@@ -59,6 +59,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
         db.execSQL("DROP TABLE IF EXISTS "+ NOME_TABELA_POSTO);
         onCreate(db);
+    }
+
+    public void drop(){
+        this.getWritableDatabase().execSQL("DROP TABLE IF EXISTS "+ NOME_TABELA_POSTO);
+        onCreate(this.getWritableDatabase());
     }
 
 }
