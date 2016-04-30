@@ -139,17 +139,12 @@ class MyAsyncTask extends AsyncTask<String, String, Void> {
                             posto.setNome(jsonobject.getString("nome"));
                             posto.setEndereco(jsonobject.getString("endereco"));
                             posto.setBairro(jsonobject.getString("bairro"));
-                            posto.setBairro(jsonobject.getString("telefone"));
                             posto.setDt_pesquisa(jsonobject.getString("dt_pesquisa"));
                             posto.setBandeira(jsonobject.getString("bandeira"));
                             posto.setGasolina(jsonobject.getString("gasolina")!= null ? Float.parseFloat(jsonobject.getString("gasolina")):  0);
                             posto.setAlcool(jsonobject.getString("alcool")!= null ? Float.parseFloat(jsonobject.getString("alcool")):  0);
                             posto.setDiesel(jsonobject.getString("diesel")!= null ? Float.parseFloat(jsonobject.getString("diesel")):  0);
                             posto.setGnv(jsonobject.getString("gnv")!= null ? Float.parseFloat(jsonobject.getString("gnv")):  0);
-                            posto.setLat(jsonobject.getString("lat") != null ? Float.parseFloat(jsonobject.getString("lat")): 0);
-                            posto.setLon(jsonobject.getString("lon") != null ? Float.parseFloat(jsonobject.getString("lon")): 0);
-                            posto.setDistancia(json.getString("distancia") != null ? Float.parseFloat(jsonobject.getString("distancia")): 0);
-                            posto.setCidade(jsonobject.getString("cidade"));
                             controllerPosto.inserePostoObjeto(posto);
                         }
                     }

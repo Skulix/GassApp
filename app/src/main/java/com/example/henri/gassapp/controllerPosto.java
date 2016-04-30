@@ -30,6 +30,9 @@ public class controllerPosto {
             valores.put(DBHelper.COLUNA_NOME, posto.getNome());
             valores.put(DBHelper.COLUNA_ENDERECO, posto.getEndereco());
             valores.put(DBHelper.COLUNA_GASOLINA, posto.getGasolina());
+            valores.put(DBHelper.COLUNA_ALCOOL, posto.getAlcool());
+            valores.put(DBHelper.COLUNA_DIESEL, posto.getDiesel());
+
             resultado = db.insert(DBHelper.NOME_TABELA_POSTO, null, valores);
 
         }catch (Exception e){
@@ -177,16 +180,16 @@ public class controllerPosto {
         p.setNome(cursor.getString(1));
         p.setEndereco(cursor.getString(2));
         p.setBairro(cursor.getString(3));
-        p.setTelefone(cursor.getString(4));
-        p.setDt_pesquisa(cursor.getString(5));
-        p.setBandeira(cursor.getString(6));
-        p.setGasolina(cursor.getString(7) != null? Float.parseFloat(cursor.getString(7)) : 0);
-        p.setAlcool(cursor.getString(8)!= null? Float.parseFloat(cursor.getString(8)) : 0);
-        p.setDiesel(cursor.getString(9)!= null? Float.parseFloat(cursor.getString(9)) : 0);
-        p.setGnv(cursor.getString(10)!= null? Float.parseFloat(cursor.getString(10)) : 0);
-        p.setLat(cursor.getString(11)!= null? Float.parseFloat(cursor.getString(11)) : 0);
-        p.setLon(cursor.getString(12)!= null? Float.parseFloat(cursor.getString(12)) : 0);
-        p.setDistancia(cursor.getString(13)!= null? Float.parseFloat(cursor.getString(13)) : 0);
+        p.setDt_pesquisa(cursor.getString(4));
+        p.setBandeira(cursor.getString(5));
+        p.setGasolina(cursor.getString(6) != null? Float.parseFloat(cursor.getString(6)) : 0);
+        p.setAlcool(cursor.getString(7)!= null? Float.parseFloat(cursor.getString(7)) : 0);
+        p.setDiesel(cursor.getString(8)!= null? Float.parseFloat(cursor.getString(8)) : 0);
+        p.setGnv(cursor.getString(9)!= null? Float.parseFloat(cursor.getString(9)) : 0);
+        p.setLat(cursor.getString(10)!= null? Float.parseFloat(cursor.getString(10)) : 0);
+        p.setLon(cursor.getString(11)!= null? Float.parseFloat(cursor.getString(11)) : 0);
+        p.setDistancia(cursor.getString(12)!= null? Float.parseFloat(cursor.getString(12)) : 0);
+        p.setTelefone(cursor.getString(13));
         p.setCidade(cursor.getString(14));
         return p;
     }

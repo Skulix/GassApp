@@ -33,9 +33,6 @@ public class ShowGasStationsList extends AppCompatActivity {
 
 
     ArrayList<modelPosto> listaPostos;
-    Cursor cursor;
-    String[] nomeCampos;
-    int[] idViews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +48,13 @@ public class ShowGasStationsList extends AppCompatActivity {
         distancia = intent.getIntExtra("distancia", distancia);
 
 
-        listaPostos = new ArrayList<modelPosto>();
+        listaPostos = new ArrayList<>();
         listaPostos = new controllerPosto(this).preencheSpinner();
 
-        listView.setAdapter(new StableArrayAdapter(this, listaPostos));
+        try{
+            listView.setAdapter(new StableArrayAdapter(this, listaPostos));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

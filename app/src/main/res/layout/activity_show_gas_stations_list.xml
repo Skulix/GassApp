@@ -14,7 +14,6 @@
         android:layout_height="fill_parent"
         android:id="@+id/listViewPostos"
         android:layout_centerHorizontal="true"
-        tools:listitem="@android:layout/simple_list_item_multiple_choice"
-        android:background="#ad1515"
+        android:background="#ffffff"
         android:visibility="visible" />
 </RelativeLayout>

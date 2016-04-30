@@ -63,6 +63,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void drop(){
         this.getWritableDatabase().execSQL("DROP TABLE IF EXISTS "+ NOME_TABELA_POSTO);
+        this.getWritableDatabase().close();
         onCreate(this.getWritableDatabase());
     }
 

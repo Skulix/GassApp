@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -14,18 +15,20 @@ import java.util.ArrayList;
  */
 public class StableArrayAdapter extends BaseAdapter {
 
-    Context context;
-    ArrayList<modelPosto> listaPostos;
-
-    private static LayoutInflater inflater = null;
+    private Context context = null;
+    private ArrayList<modelPosto> listaPostos = null;
 
     public StableArrayAdapter(Context context, ArrayList<modelPosto> listaPostos){
-        this.context = context;
-        this.listaPostos = listaPostos;
+        try {
+            this.context = context;
+            this.listaPostos = listaPostos;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     @Override
     public int getCount() {
-        return 0;
+        return listaPostos.size();
     }
 
     @Override
@@ -40,26 +43,20 @@ public class StableArrayAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Holder holder = new Holder();
-        View v = inflater.inflate(R.layout.posto_detail,null);
 
-        holder.postoName=(TextView)v.findViewById(R.id.postoName);
-        holder.alcoolPrice=(TextView)v.findViewById(R.id.alcoolPrice);
-        holder.dieselPrice=(TextView)v.findViewById(R.id.dieselPrice);
-        holder.gasolinaPrice=(TextView)v.findViewById(R.id.gasolinaPrice);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        holder.postoName.setText(listaPostos.get(position).getNome());
-        holder.gasolinaPrice.setText(String.valueOf(listaPostos.get(position).getGasolina()));
-        holder.alcoolPrice.setText(String.valueOf(listaPostos.get(position).getAlcool()));
-        holder.dieselPrice.setText(String.valueOf(listaPostos.get(position).getDiesel()));
-        return v;
+        View rowView = inflater.inflate(R.layout.posto_detail,parent,false);
+
+        TextView postoName = (TextView)rowView.findViewById(R.id.postoName);
+        TextView alcoolPrice = (TextView)rowView.findViewById(R.id.alcoolPrice);
+        TextView gasolinaPrice = (TextView)rowView.findViewById(R.id.gasolinaPrice);
+        TextView dieselPrice = (TextView)rowView.findViewById(R.id.dieselPrice);
+
+        postoName.setText(listaPostos.get(position).getNome());
+        gasolinaPrice.setText(String.valueOf(listaPostos.get(position).getGasolina()));
+        alcoolPrice.setText(String.valueOf(listaPostos.get(position).getAlcool()));
+        dieselPrice.setText(String.valueOf(listaPostos.get(position).getDiesel()));
+        return rowView;
     }
-
-    public class Holder{
-        TextView postoName;
-        TextView alcoolPrice;
-        TextView gasolinaPrice;
-        TextView dieselPrice;
-    }
-
 }
